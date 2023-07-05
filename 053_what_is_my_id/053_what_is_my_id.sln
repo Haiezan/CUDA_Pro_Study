@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "053_what_is_my_id", "053_wh
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CudaRuntime1", "..\CudaRuntime1\CudaRuntime1.vcxproj", "{5AB3F7C7-DDAE-48A2-9DD0-6F6C4E76B1C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "054_what_is_my_id_2d", "..\054_what_is_my_id_2d\054_what_is_my_id_2d.vcxproj", "{E343348C-D879-4EC5-BEC4-366D4DEF11F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{5AB3F7C7-DDAE-48A2-9DD0-6F6C4E76B1C4}.Debug|x64.Build.0 = Debug|x64
 		{5AB3F7C7-DDAE-48A2-9DD0-6F6C4E76B1C4}.Release|x64.ActiveCfg = Release|x64
 		{5AB3F7C7-DDAE-48A2-9DD0-6F6C4E76B1C4}.Release|x64.Build.0 = Release|x64
+		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Debug|x64.ActiveCfg = Debug|x64
+		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Debug|x64.Build.0 = Debug|x64
+		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Release|x64.ActiveCfg = Release|x64
+		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
