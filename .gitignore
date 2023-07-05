@@ -60,3 +60,7 @@ dkms.conf
 *.txt
 *.deps
 *.cache
+*.db-shm
+*.db-wal
+*.opendb
+*.nvsettings
