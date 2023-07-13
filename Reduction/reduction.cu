@@ -4,6 +4,7 @@
 #include <time.h>
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
+#include "../Time/Time_ns.h"
 
 const int N = (1 << 20) - 3;
 const int N_bytes = sizeof(float) * N;
@@ -64,7 +65,7 @@ __global__ void kernel1(float* arr, float* out)
 int main(void)
 {
 	// 计时变量
-	clock_t start, end;
+	struct timespec start, end;
 
 	// 初始化数据
 	float* x = new float[N]; //源数据
@@ -92,32 +93,32 @@ int main(void)
 
 
 	/*CPU串行*/
-	start = clock();
+	timespec_get(&start, TIME_UTC);
 	// 运行CPU串行函数
 	sum = CPUsum(x);
-	end = clock();
+	timespec_get(&end, TIME_UTC);
 
 	// 输出CPU运行结果
-	printf("Calculate sum by CPU: sum = %f\nElasped time: %ldms\n", sum, (end - start));
+	printf("Calculate sum by CPU: sum = %f\nElasped time: %fms\n", sum, GetDuration(&end, &start));
 	printf("\n");
 
 	/*GPU单核串行*/
 	
 	// 运行GPU串行函数
-	start = clock();
+	timespec_get(&start, TIME_UTC);
 	GPUsum << <1, 1 >> > (dx, dsum, dN);
 
 	// 拷贝计算结果到CPU
 	cudaMemcpy(&sum, dsum, sizeof(int), cudaMemcpyDeviceToHost);
-	end = clock();
+	timespec_get(&end, TIME_UTC);
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU: sum = %f\nElasped time: %ldms\n", sum, (end - start));
+	printf("Calculate sum by GPU: sum = %f\nElasped time: %fms\n", sum, GetDuration(&end, &start));
 	printf("\n");
 
 
 	/*GPU并行 kernel1*/
-	start = clock();
+	timespec_get(&start, TIME_UTC);
 	sum = 0;
 	kernel1 << <blocksPerGrid, threadsPerBlock >> > (dx, dy);
 	// 拷贝计算结果到CPU
@@ -126,10 +127,10 @@ int main(void)
 	{
 		sum += y[i];
 	}
-	end = clock();
+	timespec_get(&end, TIME_UTC);
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel1: sum = %f\nElasped time: %ldms\n", sum, (end - start));
+	printf("Calculate sum by GPU kernel1: sum = %f\nElasped time: %fms\n", sum, GetDuration(&end, &start));
 	printf("\n");
 
 
