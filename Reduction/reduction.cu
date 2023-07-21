@@ -22,7 +22,7 @@ float CPUsum(float* x)
 	return sum;
 }
 
-// GPU单核穿行计算函数
+// GPU单核串行计算函数
 __global__ void GPUsum(const float* x, float* sum, const int* N)
 {
 	*sum = 0;
