@@ -97,6 +97,37 @@ __global__ void kernel2(float* arr, float* out)
 	}
 }
 
+// kernel3
+// 连续地址，处理bank conflict问题
+__global__ void kernel3(float* arr, float* out)
+{
+	__shared__ float s_data[threadsPerBlock];
+	unsigned int tid = threadIdx.x;
+	unsigned int i = threadIdx.x + blockIdx.x * blockDim.x; // tid号线程负责的数组元素的位置
+
+	// 将数据拷贝到共享内存
+	if (i < N)
+	{
+		s_data[tid] = arr[i];
+	}
+	__syncthreads();
+
+	for (int s = blockDim.x / 2; s > 0; s >>= 1)
+	{
+		if (tid < s && i + s < N)
+		{
+			s_data[tid] += s_data[tid + s];
+		}
+		__syncthreads();
+	}
+
+	// 拷贝规约结果，注意是Block的和，而非最终结果
+	if (tid == 0)
+	{
+		out[blockIdx.x] = s_data[0];
+	}
+}
+
 
 int main(void)
 {
@@ -184,6 +215,23 @@ int main(void)
 
 	// 输出GPU串行计算结果
 	printf("Calculate sum by GPU kernel2: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("\n");
+
+
+	/*GPU并行 kernel3*/
+	start.clock();
+	sum = 0;
+	kernel3 << <blocksPerGrid, threadsPerBlock >> > (dx, dy);
+	// 拷贝计算结果到CPU
+	cudaMemcpy(y, dy, blocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
+	for (int i = 0; i < blocksPerGrid; i++)
+	{
+		sum += y[i];
+	}
+	end.clock();
+
+	// 输出GPU串行计算结果
+	printf("Calculate sum by GPU kernel3: sum = %f\nElasped time: %fms\n", sum, end - start);
 	printf("\n");
 
 
