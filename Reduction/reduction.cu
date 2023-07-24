@@ -267,6 +267,24 @@ int main(void)
 	printf("\n");
 
 
+	/*GPU并行 kernel4*/
+	const int halfblocksPerGrid = blocksPerGrid / 2; //进程块数量减半
+	start.clock();
+	sum = 0;
+	kernel4 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	// 拷贝计算结果到CPU
+	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
+	for (int i = 0; i < halfblocksPerGrid; i++)
+	{
+		sum += y[i];
+	}
+	end.clock();
+
+	// 输出GPU串行计算结果
+	printf("Calculate sum by GPU kernel4: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("\n");
+
+
 
 	cudaFree(dx);
 	cudaFree(dsum);
