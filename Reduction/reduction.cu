@@ -112,7 +112,39 @@ __global__ void kernel3(float* arr, float* out)
 	}
 	__syncthreads();
 
-	for (int s = blockDim.x / 2; s > 0; s >>= 1)
+	for (int s = blockDim.x / 2; s > 0; s >>= 1) // 解决kernel2中share memory bank conflict
+	{
+		if (tid < s && i + s < N)
+		{
+			s_data[tid] += s_data[tid + s];
+		}
+		__syncthreads();
+	}
+
+	// 拷贝规约结果，注意是Block的和，而非最终结果
+	if (tid == 0)
+	{
+		out[blockIdx.x] = s_data[0];
+	}
+}
+
+// kernel4
+// First add during global load
+// share memory 拷贝时就进行一次加操作
+__global__ void kernel4(float* arr, float* out)
+{
+	__shared__ float s_data[threadsPerBlock];
+	unsigned int tid = threadIdx.x;
+	unsigned int i = threadIdx.x + blockIdx.x * blockDim.x * 2; // tid号线程负责的数组元素的位置
+
+	// 将数据拷贝到共享内存
+	if (i < N)
+	{
+		s_data[tid] = arr[i] + arr[i + blockDim.x];
+	}
+	__syncthreads();
+
+	for (int s = blockDim.x / 2; s > 0; s >>= 1) // 解决kernel2中share memory bank conflict
 	{
 		if (tid < s && i + s < N)
 		{
@@ -221,7 +253,7 @@ int main(void)
 	/*GPU并行 kernel3*/
 	start.clock();
 	sum = 0;
-	kernel3 << <blocksPerGrid, threadsPerBlock >> > (dx, dy);
+	kernel3 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, blocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < blocksPerGrid; i++)
