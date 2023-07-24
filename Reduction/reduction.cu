@@ -213,6 +213,107 @@ __global__ void kernel5(float* arr, float* out)
 	}
 }
 
+// kernel6
+// Completely unroll
+// 完全展开
+template<unsigned int blockSize>
+__device__ void warpReduce2(volatile float* s_data, int tid)
+{
+	if (blockSize >= 64) s_data[tid] += s_data[tid + 32];
+	if (blockSize >= 32) s_data[tid] += s_data[tid + 16];
+	if (blockSize >= 16) s_data[tid] += s_data[tid + 8];
+	if (blockSize >= 8) s_data[tid] += s_data[tid + 4];
+	if (blockSize >= 4) s_data[tid] += s_data[tid + 2];
+	if (blockSize >= 2) s_data[tid] += s_data[tid + 1];
+}
+template<unsigned int blockSize>
+__global__ void reduce(float* arr, float* out)
+{
+	__shared__ float s_data[threadsPerBlock];
+	unsigned int tid = threadIdx.x;
+	unsigned int i = threadIdx.x + blockIdx.x * blockDim.x * 2; // tid号线程负责的数组元素的位置
+	
+	if (i < N)
+	{
+		s_data[tid] = arr[i] + arr[i + blockDim.x];
+	}
+	else
+	{
+		s_data[tid] = 0;
+	}
+	__syncthreads();
+
+	if (blockSize >= 1024)
+	{
+		if (tid < 512)
+		{
+			s_data[tid] += s_data[tid + 512];
+		}
+		__syncthreads();
+	}
+	if (blockSize >= 512)
+	{
+		if (tid < 256)
+		{
+			s_data[tid] += s_data[tid + 256];
+		}
+		__syncthreads();
+	}
+	if (blockSize >= 256)
+	{
+		if (tid < 128)
+		{
+			s_data[tid] += s_data[tid + 128];
+		}
+		__syncthreads();
+	}
+	if (blockSize >= 128)
+	{
+		if (tid < 64)
+		{
+			s_data[tid] += s_data[tid + 64];
+		}
+		__syncthreads();
+	}
+
+	if (tid < 32)
+	{
+		warpReduce2<blockSize>(s_data, tid);
+	}
+
+	if (tid == 0)
+	{
+		out[blockIdx.x] = s_data[0];
+	}
+}
+void kernel6(float* arr, float* out) // 展开所有循环
+{
+	switch (threadsPerBlock)
+	{
+	case 1024:
+		reduce<1024> <<<blocksPerGrid, threadsPerBlock >>> (arr, out); break;
+	case 512:
+		reduce<512> <<<blocksPerGrid, threadsPerBlock >>> (arr, out); break;
+	case 256:
+		reduce<256> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 128:
+		reduce<128> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 64:
+		reduce<64> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 32:
+		reduce<32> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 16:
+		reduce<16> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 8:
+		reduce<8> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 4:
+		reduce<4> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 2:
+		reduce<2> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	case 1:
+		reduce<1> << <blocksPerGrid, threadsPerBlock >> > (arr, out); break;
+	}
+}
 
 int main(void)
 {
@@ -352,6 +453,22 @@ int main(void)
 	 
 	// 输出GPU串行计算结果
 	printf("Calculate sum by GPU kernel5: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("\n");
+
+	/*GPU并行 kernel6*/
+	start.clock();
+	sum = 0;
+	kernel6(dx, dy);
+	// 拷贝计算结果到CPU
+	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
+	for (int i = 0; i < halfblocksPerGrid; i++)
+	{
+		sum += y[i];
+	}
+	end.clock();
+
+	// 输出GPU串行计算结果
+	printf("Calculate sum by GPU kernel6: sum = %f\nElasped time: %fms\n", sum, end - start);
 	printf("\n");
 
 
