@@ -160,6 +160,59 @@ __global__ void kernel4(float* arr, float* out)
 	}
 }
 
+// kernel5
+// Unroll last warp
+// 展开最后一个warp
+__device__ void warpReduce(volatile float* s_data, int tid) // volatile貌似无影响
+{
+	s_data[tid] += s_data[tid + 32];
+	s_data[tid] += s_data[tid + 16];
+	s_data[tid] += s_data[tid + 8];
+	s_data[tid] += s_data[tid + 4];
+	s_data[tid] += s_data[tid + 2];
+	s_data[tid] += s_data[tid + 1];
+}
+__global__ void kernel5(float* arr, float* out)
+{
+	__shared__ float s_data[threadsPerBlock];
+	unsigned int tid = threadIdx.x;
+	unsigned int i = threadIdx.x + blockIdx.x * blockDim.x * 2; // tid号线程负责的数组元素的位置
+
+	// 将数据拷贝到共享内存
+	if (i < N)
+	{
+		s_data[tid] = arr[i] + arr[i + blockDim.x];
+	}
+	__syncthreads();
+
+	for (int s = blockDim.x / 2; s > 32; s >>= 1) // 当数据小于32的时候，对warp进行展开
+	{
+		if (tid < s && i + s < N)
+		{
+			s_data[tid] += s_data[tid + s];
+		}
+		__syncthreads();
+	}
+
+	// 展开最后一个warp
+	if (tid < 32)
+	{
+		//warpReduce(s_data, tid);
+		s_data[tid] += s_data[tid + 32];
+		s_data[tid] += s_data[tid + 16];
+		s_data[tid] += s_data[tid + 8];
+		s_data[tid] += s_data[tid + 4];
+		s_data[tid] += s_data[tid + 2];
+		s_data[tid] += s_data[tid + 1];
+	}
+
+	// 拷贝规约结果，注意是Block的和，而非最终结果
+	if (tid == 0)
+	{
+		out[blockIdx.x] = s_data[0];
+	}
+}
+
 
 int main(void)
 {
@@ -284,6 +337,22 @@ int main(void)
 	printf("Calculate sum by GPU kernel4: sum = %f\nElasped time: %fms\n", sum, end - start);
 	printf("\n");
 
+
+	/*GPU并行 kernel5*/
+	start.clock();
+	sum = 0;
+	kernel5 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	// 拷贝计算结果到CPU
+	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
+	for (int i = 0; i < halfblocksPerGrid; i++)
+	{
+		sum += y[i];
+	}
+	end.clock();
+	 
+	// 输出GPU串行计算结果
+	printf("Calculate sum by GPU kernel5: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("\n");
 
 
 	cudaFree(dx);
