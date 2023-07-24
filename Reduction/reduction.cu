@@ -357,7 +357,7 @@ int main(void)
 	end.clock();
 
 	// 输出CPU运行结果
-	printf("Calculate sum by CPU: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by CPU: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 	/*GPU单核串行*/
@@ -371,7 +371,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU: sum = %f\nElapsed time: %fms\n", sum, end - start);
 	printf("\n");
 
 
@@ -391,7 +391,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel1: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel1: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
@@ -411,7 +411,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel2: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel2: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
@@ -431,7 +431,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel3: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel3: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
@@ -452,7 +452,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel4: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel4: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
@@ -473,7 +473,7 @@ int main(void)
 	end.clock();
 	 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel5: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel5: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 	/*GPU并行 kernel6*/
@@ -493,7 +493,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel6: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
+	printf("Calculate sum by GPU kernel6: sum = %f\nElapsed time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
@@ -502,5 +502,7 @@ int main(void)
 	cudaFree(dN);
 	free(x);
 	free(y);
+
+	system("pause");
 	return 0;
 }
