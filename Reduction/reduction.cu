@@ -10,6 +10,7 @@ const int N = (1 << 20) - 3;
 const int N_bytes = sizeof(float) * N;
 const int threadsPerBlock = 512;
 const int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+const int iters = 1000; // 核心循环计算次数，用于统计计算效率
 
 // CPU串行计算函数
 float CPUsum(float* x)
@@ -348,11 +349,15 @@ int main(void)
 	/*CPU串行*/
 	start.clock();
 	// 运行CPU串行函数
-	sum = CPUsum(x);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		sum = CPUsum(x);
+	}
 	end.clock();
 
 	// 输出CPU运行结果
-	printf("Calculate sum by CPU: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by CPU: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 	/*GPU单核串行*/
@@ -372,8 +377,11 @@ int main(void)
 
 	/*GPU并行 kernel1*/
 	start.clock();
-	sum = 0;
-	kernel1 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel1 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	}
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, blocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < blocksPerGrid; i++)
@@ -383,14 +391,17 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel1: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel1: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
 	/*GPU并行 kernel2*/
 	start.clock();
-	sum = 0;
-	kernel2 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel2 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	}
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, blocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < blocksPerGrid; i++)
@@ -400,14 +411,17 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel2: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel2: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
 	/*GPU并行 kernel3*/
 	start.clock();
-	sum = 0;
-	kernel3 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel3 <<<blocksPerGrid, threadsPerBlock >>> (dx, dy);
+	}
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, blocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < blocksPerGrid; i++)
@@ -417,15 +431,18 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel3: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel3: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
 	/*GPU并行 kernel4*/
 	const int halfblocksPerGrid = blocksPerGrid / 2; //进程块数量减半
 	start.clock();
-	sum = 0;
-	kernel4 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel4 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	}
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < halfblocksPerGrid; i++)
@@ -435,14 +452,18 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel4: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel4: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
 	/*GPU并行 kernel5*/
 	start.clock();
-	sum = 0;
-	kernel5 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel5 <<<halfblocksPerGrid, threadsPerBlock >>> (dx, dy);
+	}
+	
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < halfblocksPerGrid; i++)
@@ -452,13 +473,17 @@ int main(void)
 	end.clock();
 	 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel5: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel5: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 	/*GPU并行 kernel6*/
 	start.clock();
-	sum = 0;
-	kernel6(dx, dy);
+	for (int t = 0; t < iters; t++)
+	{
+		sum = 0;
+		kernel6(dx, dy);
+	}
+	
 	// 拷贝计算结果到CPU
 	cudaMemcpy(y, dy, halfblocksPerGrid * sizeof(float), cudaMemcpyDeviceToHost);
 	for (int i = 0; i < halfblocksPerGrid; i++)
@@ -468,7 +493,7 @@ int main(void)
 	end.clock();
 
 	// 输出GPU串行计算结果
-	printf("Calculate sum by GPU kernel6: sum = %f\nElasped time: %fms\n", sum, end - start);
+	printf("Calculate sum by GPU kernel6: sum = %f\nElasped time: %fms\n", sum, (end - start) / iters);
 	printf("\n");
 
 
