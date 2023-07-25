@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CudaRuntime1", "..\CudaRunt
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "054_what_is_my_id_2d", "..\054_what_is_my_id_2d\054_what_is_my_id_2d.vcxproj", "{E343348C-D879-4EC5-BEC4-366D4DEF11F4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reduction", "..\Reduction\Reduction.vcxproj", "{B1D8F99B-E0DC-430B-8363-F8207BC266B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,6 +29,10 @@ Global
 		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Debug|x64.Build.0 = Debug|x64
 		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Release|x64.ActiveCfg = Release|x64
 		{E343348C-D879-4EC5-BEC4-366D4DEF11F4}.Release|x64.Build.0 = Release|x64
+		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Debug|x64.ActiveCfg = Debug|x64
+		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Debug|x64.Build.0 = Debug|x64
+		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Release|x64.ActiveCfg = Release|x64
+		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
