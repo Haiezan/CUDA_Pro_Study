@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "054_what_is_my_id_2d", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reduction", "..\Reduction\Reduction.vcxproj", "{B1D8F99B-E0DC-430B-8363-F8207BC266B3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transpose", "..\transpose\transpose.vcxproj", "{92621BB7-9373-4722-90FD-56DA51959BC4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065const", "..\065const\065const.vcxproj", "{CAB9A1CF-E9DD-4F0C-835D-E58626006826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +37,14 @@ Global
 		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Debug|x64.Build.0 = Debug|x64
 		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Release|x64.ActiveCfg = Release|x64
 		{B1D8F99B-E0DC-430B-8363-F8207BC266B3}.Release|x64.Build.0 = Release|x64
+		{92621BB7-9373-4722-90FD-56DA51959BC4}.Debug|x64.ActiveCfg = Debug|x64
+		{92621BB7-9373-4722-90FD-56DA51959BC4}.Debug|x64.Build.0 = Debug|x64
+		{92621BB7-9373-4722-90FD-56DA51959BC4}.Release|x64.ActiveCfg = Release|x64
+		{92621BB7-9373-4722-90FD-56DA51959BC4}.Release|x64.Build.0 = Release|x64
+		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Debug|x64.ActiveCfg = Debug|x64
+		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Debug|x64.Build.0 = Debug|x64
+		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Release|x64.ActiveCfg = Release|x64
+		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
