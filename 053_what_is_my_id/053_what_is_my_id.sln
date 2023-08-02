@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transpose", "..\transpose\t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065const", "..\065const\065const.vcxproj", "{CAB9A1CF-E9DD-4F0C-835D-E58626006826}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065gmem", "..\065gmem\065gmem.vcxproj", "{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,6 +47,10 @@ Global
 		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Debug|x64.Build.0 = Debug|x64
 		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Release|x64.ActiveCfg = Release|x64
 		{CAB9A1CF-E9DD-4F0C-835D-E58626006826}.Release|x64.Build.0 = Release|x64
+		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Debug|x64.ActiveCfg = Debug|x64
+		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Debug|x64.Build.0 = Debug|x64
+		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Release|x64.ActiveCfg = Release|x64
+		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
