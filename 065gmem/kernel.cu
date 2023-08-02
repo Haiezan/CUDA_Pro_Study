@@ -16,6 +16,8 @@ __constant__ static const u32 const_data_02 = 0x77777777;
 __constant__ static const u32 const_data_03 = 0x33333333;
 __constant__ static const u32 const_data_04 = 0x11111111;
 
+__constant__ static const u32 const_data[4] = { 0x55555555 ,0x77777777 ,0x33333333 ,0x11111111 };
+
 __device__ static u32 data_01 = 0x55555555;
 __device__ static u32 data_02 = 0x77777777;
 __device__ static u32 data_03 = 0x33333333;
@@ -50,6 +52,11 @@ __global__ void const_test_gpu_const(u32* const data, const u32 num_elements)
             d |= const_data_02;
             d &= const_data_03;
             d |= const_data_04;
+
+            /*d ^= const_data[0];
+            d |= const_data[1];
+            d &= const_data[2];
+            d |= const_data[3];*/
         }
         data[tid] = d;
     }
