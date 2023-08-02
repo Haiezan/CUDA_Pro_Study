@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065const", "..\065const\065
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065gmem", "..\065gmem\065gmem.vcxproj", "{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065symbol", "..\065symbol\065symbol.vcxproj", "{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,10 @@ Global
 		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Debug|x64.Build.0 = Debug|x64
 		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Release|x64.ActiveCfg = Release|x64
 		{B82AB2E9-C80D-4E44-A8E7-DC0861C15D7E}.Release|x64.Build.0 = Release|x64
+		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Debug|x64.ActiveCfg = Debug|x64
+		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Debug|x64.Build.0 = Debug|x64
+		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Release|x64.ActiveCfg = Release|x64
+		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
