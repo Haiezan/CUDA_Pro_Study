@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065gmem", "..\065gmem\065gm
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "065symbol", "..\065symbol\065symbol.vcxproj", "{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "066_interleaved", "..\066_interleaved\066_interleaved.vcxproj", "{012986BE-C3A3-4E0F-A559-D0C0D89BA680}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -57,6 +59,10 @@ Global
 		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Debug|x64.Build.0 = Debug|x64
 		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Release|x64.ActiveCfg = Release|x64
 		{5A2FADC4-2A73-4857-AFB4-07FD6C0F9D33}.Release|x64.Build.0 = Release|x64
+		{012986BE-C3A3-4E0F-A559-D0C0D89BA680}.Debug|x64.ActiveCfg = Debug|x64
+		{012986BE-C3A3-4E0F-A559-D0C0D89BA680}.Debug|x64.Build.0 = Debug|x64
+		{012986BE-C3A3-4E0F-A559-D0C0D89BA680}.Release|x64.ActiveCfg = Release|x64
+		{012986BE-C3A3-4E0F-A559-D0C0D89BA680}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
