@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35931.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MulStream", "MulStream\MulStream.vcxproj", "{D42FBFAC-062A-4BBD-B441-62CC1FD7948C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D42FBFAC-062A-4BBD-B441-62CC1FD7948C}.Debug|x64.ActiveCfg = Debug|x64
+		{D42FBFAC-062A-4BBD-B441-62CC1FD7948C}.Debug|x64.Build.0 = Debug|x64
+		{D42FBFAC-062A-4BBD-B441-62CC1FD7948C}.Release|x64.ActiveCfg = Release|x64
+		{D42FBFAC-062A-4BBD-B441-62CC1FD7948C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {983B4C11-1402-49BC-824B-19090784CACD}
+	EndGlobalSection
+EndGlobal
